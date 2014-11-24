@@ -1,0 +1,29 @@
+<script type="text/javascript" src="/static/img.js"></script>
+<style>
+    body{
+        font-family:"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+        font-size:12px;
+    }
+    .spacer{clear:both; height:1px;}
+    /* ----------- My Form ----------- */
+    .myform{
+        margin:0 auto;
+        width:400px;
+        padding:14px;
+    }
+
+</style>
+
+<body onload="loadNewImg()">
+<div id="stylized" class="myform">
+<form action="." method="post">
+<canvas id="mycanvas"  onclick="point_it(event)" width="300" height="250" style="border:1px solid #000000;"></canvas>
+    {% csrf_token %}
+    <br> Sym: <input type="text" name="coords" id="coords"/>
+    <input type="hidden" name="imgname" id="imgname"/>
+    <input type="submit" value="Submit" size="8" class="actiontable">
+    <br><button type="button" name="clear" id="clear" onclick="showOldImg()">Clear</button>
+    <button type="button" name="fresh" id="fresh" onclick="loadNewImg()">New</button>
+</form>
+</div>
+</body>

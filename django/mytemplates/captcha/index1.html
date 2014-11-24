@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="SymCaptcha" />
+		<meta name="keywords" content="Captcha, Image Symmetry" />
+		<title>SymCaptcha</title>
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
+		<link href="http://fonts.googleapis.com/css?family=Kreon" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="/static/style.css" />
+		<script type="text/javascript" src="/static/img.js"></script>
+	</head>
+	<body onload="loadNewImg()">
+		<div id="wrapper">
+			<br class="clearfix" />
+			<div id="page">
+				<div id="sidebar">
+					<div class="box">
+						<p><font size="5">symCaptcha</font></p>
+						<p>
+                        symCaptcha is a <a href="http://en.wikipedia.org/wiki/CAPTCHA">captcha</a> based on image <a href="http://en.wikipedia.org/wiki/Symmetry">symmetry</a>. To enjoy it, take a glance at the simple instructions and examples.
+						</p>
+						<ul class="list">
+							<li class="first">1. Find the edge of the main object shown in images</li>
+                            <li>2. Draw the symmetry line segment by simply making two clicks on the edge</li>
+							<li class="last">3. If you cannot find a symmetry, please replace the images by clicking "Try New" botton; after working on both images, click 'Submit' to see if you work it out</li>
+						</ul>
+					</div>
+					<div class="box">
+						<h3>Learn More</h3>
+						<ul class="list">
+						        <li class="first"><a href="http://sundance.ist.psu.edu:8080/captcha/tests/testimg/">Labeling Symmetry for us</a></li>
+							<li class="first"><a href="#">Why symCaptcha?</a></li>
+							<li><a href="#">What is symCaptcha?</a></li>
+                            <li><a href="http://www.captcha.net">Other captchas</a></li>
+							<li class="last"><a href="http://www.webhostingbreak.com/development/12-best-captcha-resources-for-your-website/">Resources</a></li>
+						</ul>
+					</div>
+				</div>
+				<div id="content">
+				        <div class="box" align="center">
+				        <form action="." method="post">
+					        <canvas id="mycanvas"  onclick="point_it('mycanvas',event)" ondbclick="showOldImg('mycanvas')" width="300" height="250" style="border:1px solid #D6E0E2;"></canvas>
+					        <canvas id="test_canvas" onclick="point_it('test_canvas',event)" ondbclick="showOldImg('test_canvas')" width="300" height="250" style="border:1px solid #D6E0E2;"></canvas>
+					        {% csrf_token %}
+					        <input type="text" name="coords" id="coords"/>
+					        End Points of Reflection Symmetry
+					        <input type="text" name="test_coords" id="test_coords"/>
+					        <br><input type="hidden" name="imgname" id="imgname"/>
+					        <input type="hidden" name="test_cate" id="test_cate" value="{{ test_category }}"/>
+					        <input type="hidden" name="test_imgname" id="test_imgname" value="{{ test_imgname }}"/>
+					        <input type="hidden" name="test_sympoints" id="test_sympoints" value="{{ test_sympoints }}"/>
+					        <button type="button" name="lClear" id="lclear" onclick="showOldImg()" class="buttonstyle" style="border-radius:5px;border:1px solid #81BEF7; width:90px;height:26px;">Redraw Left</button>
+					        <button type="button" name="rClear" id="rclear" onclick="showImgFromDB()" style="border-radius:5px;border:1px solid #81BEF7; width:90px;height:26px;">Redraw Right</button>
+					        <button type="button" name="rfresh" id="rfresh" onclick="reload()" style="border-radius:5px;border:1px solid #81BEF7; width:80px;height:26px;">Try New</button>
+					        <input type="submit" value="Submit!" size="15" class="actiontable" style="border-radius:5px;border:1px solid #81BEF7; width:80px;height:26px;"/>
+					 </form>
+                            {% if ok %}
+                            <br><div id="div_result0" style="font:bold 20px verdana">SUCCESS ! :)</div>
+					        {% endif %}
+                            {% if failure %}
+                            <br><div id="div_result1" style="font:bold 20px verdana">FAILURE ! :(</div>
+					        {% endif %}
+					</div>
+					<div class="box">
+						<h2>Examples</h2>
+						<img class="alignleft" src="/static/eg1.jpg" width="170" height="150" alt="" />
+						<img class="alignleft" src="/static/eg5.jpg" width="170" height="150" alt="" />
+						<img class="alignleft" src="/static/eg3.jpg" width="170" height="150" alt="" />
+					</div>
+					<br class="clearfix" />
+				</div>
+				<br class="clearfix" />
+			</div>
+		</div>
+		<div id="footer">
+			&copy; 2012 CSE@PSU | Design by laowuz</a> | Images by <a href="http://www.vision.caltech.edu/Image_Datasets/Caltech256/">Caltech256</a>
+		</div>
+	</body>
+</html>

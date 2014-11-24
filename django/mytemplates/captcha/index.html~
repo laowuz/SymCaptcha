@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SymCaptcha</title>
+        <script type="text/javascript" src="/static/img.js"></script>
+        <style>
+            
+            body{
+                font-family:"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+                font-size:12px;
+            }
+            .spacer{clear:both; height:1px;}
+            /* ----------- My Form ----------- */
+            
+            #content{
+                width:700px;
+                margin-left:auto;
+                margin-right:auto;
+            }
+
+        </style>
+    </head>
+    <body onload="loadNewImg()">
+    <div id="content">
+        <h2>SymCaptcha:A Captcha based on Image Symmetry</h2>
+    <form action="." method="post">
+        <canvas id="mycanvas"  onclick="point_it('mycanvas',event)" ondbclick="showOldImg('mycanvas')" width="300" height="250" style="border:1px solid #000000;"></canvas>
+        <canvas id="test_canvas" onclick="point_it('test_canvas',event)" ondbclick="showOldImg('test_canvas')" width="300" height="250" style="border:1px solid #000000;"></canvas>
+        {% csrf_token %}
+        <br><br><input type="text" name="coords" id="coords"/>
+         Symmetry Points 
+        <input type="text" name="test_coords" id="test_coords"/>
+        <input type="submit" value="Submit!" size="15" class="actiontable">
+        <br><input type="hidden" name="imgname" id="imgname"/>
+        <input type="hidden" name="test_cate" id="test_cate" value="{{ test_category }}"/>
+        <input type="hidden" name="test_imgname" id="test_imgname" value="{{ test_imgname }}"/>
+        <input type="hidden" name="test_sympoints" id="test_sympoints" value="{{ test_sympoints }}"/>
+        <button type="button" name="lClear" id="lclear" onclick="showOldImg()">Left Clear</button>
+        <button type="button" name="rClear" id="rclear" onclick="showImgFromDB()">Right Clear</button>
+        <button type="button" name="rfresh" id="rfresh" onclick="reload()">New Test</button>
+        </form>
+    {% if ok %}
+            <h1><b>SUCCESS ! :)</b></h1>
+    {% endif %}
+    {% if failure %}
+            <h1><b>FAILURE ! :(</b></h1>
+            {% endif %}
+            Good examples:<br><img src="/static/eg5.jpg"></img>
+            Bad examples:<img src="/static/eg5-0.jpg"></img>
+    </div>
+    </body>
